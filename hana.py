@@ -36,9 +36,10 @@ class Hana:
         rows = list(cursor.fetchall())
         result = [dict(zip(column_names, row)) for row in rows]
         cursor.close()
-        print(type(result))
-        print(result)
-        return json.dumps(result, indent=4, cls=DateTimeEncoder, default=str)
+        # print(type(result))
+        # print(result)
+        # return json.dumps(result, indent=4, cls=DateTimeEncoder, default=str)
+        return result
 
     def executeDb(self, query):
         cursor = self.conn.cursor()

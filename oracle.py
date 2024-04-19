@@ -35,10 +35,10 @@ class Oracle:
         rows = list(cursor.fetchall())
         result = [dict(zip(column_names,row)) for row in rows]
         cursor.close()
-        print(type(result))
-        print(result)
-        return json.dumps(result, indent=4, sort_keys=True, default=str)
-        # return result
+        # print(type(result))
+        # print(result)
+        # return json.dumps(result, indent=4, sort_keys=True, default=str)
+        return result
 
     def executeDB(self, query):
         cursor = self.conn.cursor()
