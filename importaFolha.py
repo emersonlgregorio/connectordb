@@ -1,10 +1,19 @@
 import pandas as pd
 from openpyxl import load_workbook
 import json
-
+import base64
+def decodeArquivo(file):
+    arquivo = file.split(';')[2].split(',')[1]
+    arquivo = base64.b64decode(arquivo)
+    output_file = open('arquivo_processado.xlsx', 'wb')
+    output_file.write(arquivo)
+    output_file.close()
 
 def preparaArquivo(file):
-    wb = load_workbook(file)
+    decodeArquivo(file)
+
+    arquivo = 'arquivo_processado.xlsx'
+    wb = load_workbook(arquivo)
     ws = wb.active
 
     # Cria lista de ajustes
@@ -56,13 +65,13 @@ def preparaArquivo(file):
                 ws[f'K{c}'] = empresa
                 ws[f'L{c}'] = filial
                 ws[f'M{c}'] = ccusto
-    wb.save(file)
+    wb.save(arquivo)
 
     # Marca Linhas para exclusão
-    wb2 = load_workbook(file)
+    wb2 = load_workbook(arquivo)
     ws2 = wb2.active
     ws2['N1'] = 'Excluir'
-    wb2.save(file)
+    wb2.save(arquivo)
     for contador, i in enumerate(ws2.iter_rows(min_row=2,
                                                # max_row=100,
                                                values_only=True)):
@@ -71,16 +80,16 @@ def preparaArquivo(file):
         if (not i[11]) or (i[11] == None) or (i[11] == '') or (i[0] == 'Conta'):
             ws2[f'N{c}'] = 'Excluir'
             # ws.delete_rows(contador)
-    wb2.save(file)
+    wb2.save(arquivo)
 
     # Exclui linhas do arquivo
-    df = pd.read_excel(file)
+    df = pd.read_excel(arquivo)
     filtro = df['Excluir'] != 'Excluir'
     folha_contabil = df[filtro]
-    folha_contabil.to_excel(file)
+    folha_contabil.to_excel(arquivo)
 
     # transformar em json
-    wb3 = load_workbook(file)
+    wb3 = load_workbook(arquivo)
     ws3 = wb3.active
     folhaContabil = []
     for contador, i in enumerate(ws3.iter_rows(min_row=2,
