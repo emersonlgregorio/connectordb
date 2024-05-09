@@ -10,6 +10,7 @@ def decodeArquivo(file):
     output_file.close()
 
 def preparaArquivo(file):
+    print('Iniciando importanção do arquivo. Processo: Importacao Folha de Pagamento')
     decodeArquivo(file)
 
     arquivo = 'arquivo_processado.xlsx'
@@ -110,6 +111,7 @@ def preparaArquivo(file):
             }
         )
 
+    print('Importanção do arquivo finalizada. Processo: Importacao Folha de Pagamento')
     return json.dumps(folhaContabil, indent=4)
 
 
