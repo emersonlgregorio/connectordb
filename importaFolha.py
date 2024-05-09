@@ -1,7 +1,9 @@
 import pandas as pd
 from openpyxl import load_workbook
-import json
 import base64
+import os
+
+
 def decodeArquivo(file):
     arquivo = file.split(';')[2].split(',')[1]
     arquivo = base64.b64decode(arquivo)
@@ -9,8 +11,13 @@ def decodeArquivo(file):
     output_file.write(arquivo)
     output_file.close()
 
+
 def preparaArquivo(file):
     print('Iniciando importanção do arquivo. Processo: Importacao Folha de Pagamento')
+
+    if os.path.exists('arquivo_processado.xlsx'):
+        os.remove('arquivo_processado.xlsx')
+
     decodeArquivo(file)
 
     arquivo = 'arquivo_processado.xlsx'
@@ -52,7 +59,7 @@ def preparaArquivo(file):
         l_fin = l['linhaFinal']
         filial = l['filial']
         empresa = l['empresa']
-        print(l['filial'], l['empresa'], filial)
+        # print(l['filial'], l['empresa'], filial)
         ccusto = l['ccusto']
         intervalo = range(l_ini, l_fin)
         for contador, i in enumerate(ws.iter_rows(min_row=0,
@@ -112,8 +119,7 @@ def preparaArquivo(file):
         )
 
     print('Importanção do arquivo finalizada. Processo: Importacao Folha de Pagamento')
-    return json.dumps(folhaContabil, indent=4)
-
+    return folhaContabil
 
 # if __name__ == '__main__':
 #     teste = preparaArquivo('contabilizacao_de_ janeiro.xlsx')
