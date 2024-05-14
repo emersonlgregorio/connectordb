@@ -74,6 +74,7 @@ def preparaArquivo(file):
                 ws[f'L{c}'] = filial
                 ws[f'M{c}'] = ccusto
     wb.save(arquivo)
+    wb.close()
 
     # Marca Linhas para exclusão
     wb2 = load_workbook(arquivo)
@@ -89,6 +90,7 @@ def preparaArquivo(file):
             ws2[f'N{c}'] = 'Excluir'
             # ws.delete_rows(contador)
     wb2.save(arquivo)
+    wb2.close()
 
     # Exclui linhas do arquivo
     df = pd.read_excel(arquivo)
@@ -119,6 +121,7 @@ def preparaArquivo(file):
         )
 
     print('Importanção do arquivo finalizada. Processo: Importacao Folha de Pagamento')
+    ws3.close()
     return folhaContabil
 
 # if __name__ == '__main__':
