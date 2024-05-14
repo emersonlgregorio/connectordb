@@ -121,7 +121,7 @@ def preparaArquivo(file):
         )
 
     print('Importanção do arquivo finalizada. Processo: Importacao Folha de Pagamento')
-    ws3.close()
+    wb3.close()
     return folhaContabil
 
 # if __name__ == '__main__':
