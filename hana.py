@@ -36,6 +36,7 @@ class Hana:
         rows = list(cursor.fetchall())
         result = [dict(zip(column_names, row)) for row in rows]
         cursor.close()
+        self.conn.close()
         # print(type(result))
         # print(result)
         # return json.dumps(result, indent=4, cls=DateTimeEncoder, default=str)
@@ -45,6 +46,7 @@ class Hana:
         cursor = self.conn.cursor()
         cursor.execute(query)
         cursor.close()
+        self.conn.close()
 
 class DateTimeEncoder(json.JSONEncoder):
     def default(self, z):
