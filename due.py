@@ -16,8 +16,6 @@ def infosimples(keynfe, senha):
         "token": "SEiDpm7AXh5rlGGf1w6r17lb5KCa8M51DQQzj6sy",
         "nfe": f"{keynfe}"
     }
-    # print(pkcs12_cert)
-    # print(pkcs12_pass)
 
     response = requests.post(url, args)
     response = response.text
