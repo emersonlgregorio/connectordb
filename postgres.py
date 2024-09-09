@@ -40,6 +40,20 @@ class Postgres:
         # print(rows)
         return result
 
+    def selectDb(self, query):
+        conn = self.conn.cursor()
+        conn.execute(query)
+        column_names = list(map(lambda x: x.lower(), [
+            d[0] for d in conn.description]))
+        # list of data items
+        rows = list(conn.fetchall())
+        result = [dict(zip(column_names, row)) for row in rows]
+        # print(result)
+        conn.close()
+
+        # print(rows)
+        return result
+
     def executeDb(self, query):
         try:
             conn = self.conn.cursor()
