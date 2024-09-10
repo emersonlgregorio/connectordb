@@ -12,6 +12,7 @@ def send_email(to_email, subject, title_email,body_email,task_link):
     password = "1nt3gr4@2900$"
 
     env = Environment(loader=FileSystemLoader('.'))
+    print(f"O caminho do template é: {env}")
     template = env.get_template('email_template.html')
 
     dados = {
