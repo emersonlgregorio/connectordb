@@ -55,3 +55,6 @@ def send_email(to_email, subject, title_email,body_email,task_link):
 # task_link = "https://example.com/confirmacao"
 #
 # send_email(to_email, subject, title_email,body_email,task_link)
+
+# http://192.168.1.222:8001/tasks/4465/a43aa6db-5afa-49b4-b20c-417256f5b7dd
+# http://http//192.168.1.222:8001/tasks/4465/a43aa6db-5afa-49b4-b20c-417256f5b7dd
