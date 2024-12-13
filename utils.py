@@ -1,4 +1,6 @@
 import unicodedata
+import json
+from flask import jsonify
 
 def remover_acentos(texto):
     # Normaliza o texto para decompor os caracteres com acentos
@@ -15,7 +17,7 @@ def remover_acentos_dict(dicionario):
             novo_dicionario[chave] = remover_acentos_dict(valor)
         else:
             novo_dicionario[chave] = valor
-    return novo_dicionario
+    return json.dumps(novo_dicionario, indent=4)
 
 if __name__ == '__main__':
     Cadastro = {
@@ -33,5 +35,5 @@ if __name__ == '__main__':
         }
     }
     Cadastro_sem_acentos = remover_acentos_dict(Cadastro)
-
+    print(type(Cadastro_sem_acentos))
     print(Cadastro_sem_acentos)

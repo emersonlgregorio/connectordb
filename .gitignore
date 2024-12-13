@@ -121,6 +121,7 @@ env.bak/
 venv.bak/
 .idea/
 .idea
+teste.py
 
 # Spyder project settings
 .spyderproject

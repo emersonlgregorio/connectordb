@@ -25,7 +25,7 @@ class Hana:
             exit()
 
         #If no errors, print connected
-        print('connected')
+        # print('connected')
 
     def selectDb(self, query):
         cursor = self.conn.cursor()

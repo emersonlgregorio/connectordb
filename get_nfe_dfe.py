@@ -26,8 +26,13 @@ def retrieve_blob(keynfe):
     cursor.close()
     conn.close()
 
-    if result and result[0]:
-        return bytes(result[0])  # Converte para bytes
+    print(result)
+
+    if result:
+        if result and result[0]:
+            return bytes(result[0])  # Converte para bytes
+        else:
+            return '999'
     else:
         return '999'
 
@@ -37,37 +42,48 @@ def analyze_blob(blob):
     # print("Primeiros bytes do BLOB:", blob[:20])
     # print("Hexadecimal do BLOB:", blob[:20].hex())
 
-    try:
-        decompressed_data = zlib.decompress(blob, wbits=-zlib.MAX_WBITS)
-        return decompressed_data
-    except zlib.error:
+    if blob != '999':
+        try:
+            decompressed_data = zlib.decompress(blob, wbits=-zlib.MAX_WBITS)
+            return decompressed_data
+        except zlib.error:
+            return '999'
+    else:
         return '999'
 
 
 # Converter XML para JSON
 def convert_blob_to_json(key_nfe):
     blob = retrieve_blob(key_nfe)
-    # Analisar ou descompactar o BLOB
-    data = analyze_blob(blob)
 
-    # Tentar decodificar o XML como UTF-8
-    try:
-        xml_content = data.decode('utf-8')
-    except UnicodeDecodeError:
-        return '999'
+    if blob != '999':
+        # Analisar ou descompactar o BLOB
+        data = analyze_blob(blob)
 
-    # Converter XML para JSON
-    try:
-        parsed_dict = xmltodict.parse(xml_content)
-        json_content = json.dumps(parsed_dict, indent=4)
-        return json_content
-    except Exception as e:
-        return '999'
+        # Tentar decodificar o XML como UTF-8
+        try:
+            xml_content = data.decode('utf-8')
+        except UnicodeDecodeError:
+            return '999'
+
+        # Converter XML para JSON
+        try:
+            parsed_dict = xmltodict.parse(xml_content)
+            json_content = parsed_dict
+            type(json_content)
+            return json_content
+        except Exception as e:
+            return '999'
+    else:
+        return {
+            "status_code": "999",
+            "status_message": 'XML Não localizado'
+        }
 
 # Main
 if __name__ == "__main__":
     try:
-        key_nfe = '51241148539407000894550030000920911389455461'
+        key_nfe = '51241103507415000578558900041807901113393335'
 
         # Converter o BLOB para JSON
         json_content = convert_blob_to_json(key_nfe)
