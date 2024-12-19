@@ -16,16 +16,15 @@ except oracledb.DatabaseError as e:
 class Oracle:
 
     def __init__(self, connection):
-        user = connection['user']
-        password = connection['password']
-        dsn = connection['dsn']
+        user = 'agnew'
+        password = 'agnew'
+        dsn = '172.20.2.2/prod'
 
         try:
             self.conn = oracledb.connect(user=user,
                                           password=password,
                                           dsn=dsn
                                          )
-
         except oracledb.Error as er:
             print('Connect failed, exiting')
             print(er)
