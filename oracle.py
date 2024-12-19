@@ -1,9 +1,17 @@
 import json
 import datetime
 import oracledb
+import os
 
-# oracledb.init_oracle_client(lib_dir=r"C:\oracle\instantclient_21_13")
-oracledb.init_oracle_client(lib_dir=r"/app/oracle/instantclient_21_13")
+try:
+    if os.name == 'nt':  # 'nt' indica Windows
+        oracledb.init_oracle_client(lib_dir=r"C:\oracle\instantclient_21_13")
+    else:  # Qualquer outro sistema operacional (assumindo Linux)
+        oracledb.init_oracle_client(lib_dir=r"/app/oracle/instantclient")
+    print("Oracle client initialized successfully!")
+except oracledb.DatabaseError as e:
+    print("Error initializing Oracle client:", e)
+    print("Make sure the Oracle client is installed and the path is correct.")
 
 class Oracle:
 
@@ -54,3 +62,19 @@ class DateTimeEncoder(json.JSONEncoder):
             return (str(z))
         else:
             return super().default(z)
+
+
+if __name__ == '__main__':
+    connection = {
+        "dsn": "172.20.2.2:1521/prod",  # Exemplo de DSN (IP:Porta/SID ou Service Name)
+        "user": "agnew",
+        "password": "agnew"
+    }
+
+    query = f"""
+        SELECT * FROM AC_VW_NF_EXP_REMESSA WHERE DANFE_EXP LIKE '51241103262185000109550010000302161238966510'
+    """
+
+    nf_remessas = Oracle(connection).selectDb(query)
+
+    print(nf_remessas)

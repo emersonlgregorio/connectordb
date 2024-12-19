@@ -1,6 +1,7 @@
 from AesEverywhere import aes256
 import base64
 import requests
+import json
 
 
 def infosimples(keynfe, senha):
@@ -20,3 +21,9 @@ def infosimples(keynfe, senha):
     response = requests.post(url, args)
     response = response.text
     return response
+
+if __name__ == '__main__':
+    nfe = infosimples('51241103262185000109550010000304361871907181', 'Crestani123')
+    nfe = json.loads(nfe)
+    status_code = nfe['code']
+    mensagem = nfe['code_message']
