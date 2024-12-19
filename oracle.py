@@ -1,30 +1,23 @@
 import json
 import datetime
 import oracledb
-import os
 
-try:
-    if os.name == 'nt':  # 'nt' indica Windows
-        oracledb.init_oracle_client(lib_dir=r"C:\oracle\instantclient_21_13")
-    else:  # Qualquer outro sistema operacional (assumindo Linux)
-        oracledb.init_oracle_client(lib_dir=r"/app/oracle/instantclient")
-    print("Oracle client initialized successfully!")
-except oracledb.DatabaseError as e:
-    print("Error initializing Oracle client:", e)
-    print("Make sure the Oracle client is installed and the path is correct.")
+# oracledb.init_oracle_client(lib_dir=r"C:\oracle\instantclient_21_13")
+oracledb.init_oracle_client(lib_dir=r"/app/oracle/instantclient")
 
 class Oracle:
 
     def __init__(self, connection):
-        user = 'agnew'
-        password = 'agnew'
-        dsn = '172.20.2.2/prod'
+        user = connection['user']
+        password = connection['password']
+        dsn = connection['dsn']
 
         try:
             self.conn = oracledb.connect(user=user,
                                           password=password,
                                           dsn=dsn
                                          )
+
         except oracledb.Error as er:
             print('Connect failed, exiting')
             print(er)
