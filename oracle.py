@@ -3,7 +3,8 @@ import datetime
 import oracledb
 
 # oracledb.init_oracle_client(lib_dir=r"C:\oracle\instantclient_21_13")
-oracledb.init_oracle_client(lib_dir=r"/app/oracle/instantclient")
+# oracledb.init_oracle_client(lib_dir=r"/app/oracle/instantclient")
+oracledb.init_oracle_client()
 
 class Oracle:
 
