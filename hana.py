@@ -54,3 +54,22 @@ class DateTimeEncoder(json.JSONEncoder):
             return (str(z))
         else:
             return super().default(z)
+
+
+if __name__ == '__main__':
+    connection = {
+        "address": "172.20.1.4",
+        "port": "30015",
+        "user": "SYSTEM",
+        "password": "9Ab63^Op33"
+    }
+
+    query = f"""
+                    SELECT to_char(w."AvgPrice") "AvgPrice" FROM sbo_crestani_prd.oitw w
+                    WHERE w."ItemCode" = '023004' AND w."WhsCode" = '03.MATR'
+                  """
+
+    rsp = Hana(connection).selectDb(query)
+    print(rsp)
+    avgPrice = rsp[0]['avgprice']
+    print(avgPrice)
