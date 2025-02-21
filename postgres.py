@@ -64,3 +64,35 @@ class Postgres:
             print("Error: %s" % error)
             self.conn.close()
             return 1
+
+
+if __name__ == '__main__':
+    connection = {
+        "host": "172.20.1.229",  # Exemplo de DSN (IP:Porta/SID ou Service Name)
+        "database": "spiff_prod",
+        "user": "spiff",
+        "password": "crest@ni@2900"
+    }
+
+    query = f"""
+        SELECT distinct 
+          itens_averbados -> 0 ->> 'numero_due' numero_due,
+          itens_averbados -> 0 ->> 'data_embarque' data_embarque,
+          itens_averbados -> 0 ->> 'data_averbacao' data_averbacao,
+          itens_averbados -> 0 ->> 'motivo_alteracao' motivo_alteracao,
+          '1' as natureza,
+          entidadeid,
+          null as nro_declaracao,
+          null as tipo_documento,
+          null as tipo_conhecimento,
+          null as data_declaracao,
+          null as pais_destino
+      FROM 
+          sap.due_eventos
+      where
+          itens_averbados -> 0 ->> 'numero_due' not in (select d."NumeroDeclaracao" from sap.due_dados d)
+    """
+
+    nf_remessas = Postgres(connection).selectDb(query)
+
+    print(nf_remessas)
