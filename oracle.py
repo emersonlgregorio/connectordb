@@ -49,10 +49,11 @@ class Oracle:
         cursor.close()
         self.conn.close()
 
-    def callProc(self, procedure, parametros):
+    def callProc(self, procedure, id, json):
         try:
             cursor = self.conn.cursor()
-            cursor.callproc(procedure, parametros)
+            print(json)
+            cursor.callproc(procedure, [id,json])
             code = 201
             message = 'Executado com sucesso!!!'
             return code, message
@@ -88,7 +89,7 @@ if __name__ == '__main__':
     #
     # nf_remessas = Oracle(connection).selectDb(query)
 
-    proc = Oracle(connection).callProc('zprocessaromaneio', ['{\"pcodigo\": 6407, \"pplacaveiculo\": \"ACY5A12\", \"pplacacarreta\": \"ACY5A12\", \"ptagassociado\": null, \"pmotorista\": \"SALOMAO BARROS\", \"ptalhoes\": [{\"talhao\": \"CO-49\", \"porcentagem_carga\": 100, \"pfazenda\": \"1283848702\", \"pordermservico\": \"7433928902\"}], \"pproduto\": \"SOJA EM GRAOS\", \"pbruto\": 59412, \"ptara\": 23456, \"pliquido\": 35956, \"ptipodocumento\": \"osg\", \"parmazem\": \"1494313202\", \"pdata\": \"20/02/2025\", \"psafra\": \"15\", \"pequipe\": \"4296754202\", \"pumidade\": \"14\", \"pimpureza\": \"1\", \"pavariados\": \"2\", \"pquebrados\": \"1\", \"pardidos\": \"1\", \"poutros\": \"1\", \"pgraosverdes\": \"1\", \"pnotaorigem\": null, \"pdataorigem\": null, \"pserieorigem\": null, \"pvalororigem\": null, \"pqtdeorigem\": null, \"pobservacao\": \"2\", \"pordemcarregamento\": 5214}'])
+    proc = Oracle(connection).callProc('zprocessaromaneio', 'bdc29093-0b52-4b2b-9d66-b02a4db3e30b','{\"pcodigo\": 6455, \"pplacaveiculo\": \"ACY5A12\", \"pplacacarreta\": \"ACY5A12\", \"ptagassociado\": null, \"pmotorista\": \"SALOMAO BARROS\", \"ptalhoes\": [{\"talhao\": \"CO-49\", \"porcentagem_carga\": 100, \"pfazenda\": \"1283848702\", \"pordermservico\": \"7433928902\"}], \"pproduto\": \"  12725502\", \"pbruto\": 55000, \"ptara\": 25000, \"pliquido\": 30000, \"ptipodocumento\": \"osg\", \"parmazem\": \"7417885002\", \"pdata\": \"21/02/2025\", \"psafra\": \"15\", \"pequipe\": \" 830877002\", \"pumidade\": \"14\", \"pimpureza\": \"1\", \"pavariados\": \"1\", \"pquebrados\": \"1\", \"pardidos\": \"1\", \"poutros\": \"1\", \"pgraosverdes\": \"1\", \"pnotaorigem\": null, \"pdataorigem\": null, \"pserieorigem\": null, \"pvalororigem\": null, \"pqtdeorigem\": null, \"pobservacao\": \"t\", \"pordemcarregamento\": 1564}')
 
     code, message = proc
 
