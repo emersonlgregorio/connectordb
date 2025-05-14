@@ -25,7 +25,7 @@ class Hana:
             exit()
 
         #If no errors, print connected
-        # print('connected')
+        print('connected')
 
     def selectDb(self, query):
         cursor = self.conn.cursor()
@@ -43,6 +43,7 @@ class Hana:
         return result
 
     def executeDb(self, query):
+        print('executando')
         cursor = self.conn.cursor()
         cursor.execute(query)
         cursor.close()
@@ -64,12 +65,16 @@ if __name__ == '__main__':
         "password": "9Ab63^Op33"
     }
 
-    query = f"""
-                    SELECT to_char(w."AvgPrice") "AvgPrice" FROM sbo_crestani_prd.oitw w
-                    WHERE w."ItemCode" = '023004' AND w."WhsCode" = '03.MATR'
+    query_update = f"""
+                    update SBO_CRESTANI_PRD.CONTROLEDUE set DUE = 'sim' where KEYNFE = '51250103262185000443550010000018601735742390'
                   """
+    Hana(connection).executeDb(query_update)
+    Hana(connection).executeDb('commit')
+
+    query = f"""
+            SELECT * FROM SBO_CRESTANI_PRD.CONTROLEDUE c WHERE c.KEYNFE = '51250103262185000443550010000018601735742390'
+    """
 
     rsp = Hana(connection).selectDb(query)
     print(rsp)
-    avgPrice = rsp[0]['avgprice']
-    print(avgPrice)
+

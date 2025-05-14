@@ -68,7 +68,7 @@ class Postgres:
 
 if __name__ == '__main__':
     connection = {
-        "host": "172.20.1.229",  # Exemplo de DSN (IP:Porta/SID ou Service Name)
+        "host": "192.168.1.229",  # Exemplo de DSN (IP:Porta/SID ou Service Name)
         "database": "spiff_prod",
         "user": "spiff",
         "password": "crest@ni@2900"
