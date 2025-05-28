@@ -30,3 +30,4 @@ if __name__ == '__main__':
     nfe = json.loads(nfe)
     status_code = nfe['code']
     mensagem = nfe['code_message']
+    print(nfe)
