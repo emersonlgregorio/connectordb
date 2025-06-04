@@ -19,6 +19,8 @@ def remover_acentos_dict(dicionario):
             novo_dicionario[chave] = valor
     return json.dumps(novo_dicionario, indent=4)
 
+
+
 if __name__ == '__main__':
     Cadastro = {
         "Nome do Item": "PNEU",
